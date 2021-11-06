@@ -37,11 +37,7 @@ try {
 
 
 $client2 = RedisAdapter::createConnection(
-
-    // provide a string dsn
     'redis://redis:6379',
-
-    // associative array of configuration options
     [
         'lazy' => false,
         'persistent' => 0,
@@ -51,24 +47,24 @@ $client2 = RedisAdapter::createConnection(
         'read_timeout' => 0,
         'retry_interval' => 0,
     ]
-
 );
 
 
 
 $cache = new RedisAdapter($client2);
 
+
 $key = "key";
 $data = "hello world";
 
 
 $cacheItem = $cache->getItem($key);
-$cacheItem->set($ug);
-$cacheItem->expiresAfter(60);
+$cacheItem->set($data);
+$cacheItem->expiresAfter(3600);
 $cache->save($cacheItem);
 
 
-dump($cache->getItem('key')->get()->fibonacci(10)) ; 
+dump($cache->getItem('key')->get() ) ; 
 
 
 
