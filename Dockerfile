@@ -1,4 +1,6 @@
-FROM php:cli
+FROM php:7.4-fpm
+
+
 ENV APP_DIR /var/www
 ENV APPLICATION_ENV development
 RUN mkdir -p $APP_DIR
