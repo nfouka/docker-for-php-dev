@@ -4,7 +4,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
-
+$start_time = microtime(true);
 class smart {
 
     public function fibonacci($n,$first = 0,$second = 1)
@@ -49,8 +49,12 @@ $cacheItem->set($cacheValue);
 $cacheItem->expiresAfter(3600);
 $cache->save($cacheItem);
 
+echo phpversion();
 dump($cache->getItem('key')->get() ) ; 
+$end_time = microtime(true);
 
-
+$execution_time = ($end_time - $start_time);
+  
+echo " Execution time of script = ".$execution_time." sec";
 
 ?>
