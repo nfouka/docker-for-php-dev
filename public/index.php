@@ -21,7 +21,7 @@ class smart {
 class uga extends smart { }
 
 $ug = new uga() ; 
-$cacheValue = $ug->fibonacci(100) ; 
+$cacheValue = $ug->fibonacci( empty($_GET['q']) ? 50:$_GET['q'] ) ; 
 
 
 $client2 = RedisAdapter::createConnection(
@@ -43,12 +43,14 @@ $cache = new RedisAdapter($client2);
 
 $key = "key";
 
+
 $cacheItem = $cache->getItem($key);
 $cacheItem->set($cacheValue);
 $cacheItem->expiresAfter(3600);
 $cache->save($cacheItem);
 
 dump($cache->getItem('key')->get() ) ; 
+
 
 
 ?>
