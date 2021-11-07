@@ -2,16 +2,31 @@ version: '3.6'
 
 services:
    
-   
+
+    php:
+      container_name: php
+      hostname: php
+      build:
+       context: ./
+       dockerfile: Dockerfile
+      ports:
+        - 80:80
+      links:
+        - redis
+      networks:
+        - php_redis
+      volumes:
+        - ./public:/var/www/public
+
     redis:
       image: 'bitnami/redis:latest'
       ports:
         - 6379:6379
       networks:
-        - n1
+        - php_redis
       environment:
           - ALLOW_EMPTY_PASSWORD=yes
 
 networks:
-  n1:
-    external: true
+  php_redis:
+    driver: bridge

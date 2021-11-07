@@ -21,19 +21,7 @@ class smart {
 class uga extends smart { }
 
 $ug = new uga() ; 
-
-
-try {
-    $redis = new \Predis\Client([
-        'host' => 'redis:6379' 
-    ]);
-    $redis->set('name', 'Wai Yansqqs Hein');
-
-    dump($redis->get('name')) ; 
-    
-} catch (Exception $e) {
-    
-}
+$cacheValue = $ug->fibonacci(100) ; 
 
 
 $client2 = RedisAdapter::createConnection(
@@ -50,22 +38,17 @@ $client2 = RedisAdapter::createConnection(
 );
 
 
-
 $cache = new RedisAdapter($client2);
 
 
 $key = "key";
-$data = "hello world";
-
 
 $cacheItem = $cache->getItem($key);
-$cacheItem->set($data);
+$cacheItem->set($cacheValue);
 $cacheItem->expiresAfter(3600);
 $cache->save($cacheItem);
 
-
 dump($cache->getItem('key')->get() ) ; 
-
 
 
 ?>
